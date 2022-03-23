@@ -1,5 +1,7 @@
+import 'package:filmscafe_task/logic/google_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:filmscafe_task/screens/auth/signup.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../utils/methods.dart';
 import '../../widgets/custom_input.dart';
 import '../../widgets/rounded_button.dart';
@@ -94,6 +96,29 @@ class _LoginScreenState extends State<LoginScreen> {
                             onTap: () {
                               Navigator.pushNamed(context, "reset-password");
                             },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(25.0),
+                          child: ElevatedButton.icon(
+                            onPressed: () async {
+                              Methods.showLoaderDialog(context);
+                              final _googleUser =
+                                  await GoogleAuthHelper().googleSignIn();
+                              if (_googleUser != null) {
+                                Navigator.pop(context);
+                                Navigator.pushNamed(context, "dummy");
+                              } else {}
+                            },
+                            icon: const FaIcon(
+                              FontAwesomeIcons.google,
+                            ),
+                            label: const Text(
+                              "Sign in with Google",
+                            ),
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.orange,
+                            ),
                           ),
                         ),
                       ],

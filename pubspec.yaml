@@ -38,8 +38,13 @@ dependencies:
   firebase_core: ^1.13.1
   firebase_auth: ^3.3.11
 
+
   animated_splash_screen: ^1.2.0
   page_transition: ^2.0.5
+  font_awesome_flutter: ^10.0.0
+
+  provider: ^6.0.2
+  google_sign_in: ^5.2.4
 
 dev_dependencies:
   flutter_test:
