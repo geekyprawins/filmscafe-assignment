@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "199399844911",
+    "project_id": "filmscafe-task",
+    "storage_bucket": "filmscafe-task.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:199399844911:android:079c0b17cafffa8c96aada",
+        "android_client_info": {
+          "package_name": "com.example.filmscafe_task"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "199399844911-v8hou17lcu95hj7j5sn6v7u6evrooa6m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHV3TaHBfi8z-cVy9cqd_1Vi0PNT8p3_s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "199399844911-v8hou17lcu95hj7j5sn6v7u6evrooa6m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
