@@ -1,9 +1,10 @@
-import 'package:filmscafe_task/screens/auth/login.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:filmscafe_task/logic/auth_helper.dart';
 import 'package:flutter/material.dart';
-import '../../utils/methods.dart';
-import '../../widgets/custom_input.dart';
-import '../../widgets/rounded_button.dart';
+
+import 'package:filmscafe_task/screens/auth/login.dart';
+
+import 'package:filmscafe_task/widgets/custom_input.dart';
+import 'package:filmscafe_task/widgets/rounded_button.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -27,7 +28,6 @@ class _SignUpState extends State<SignUp> {
   final FocusNode phoneFocus = FocusNode();
   final FocusNode aadhaarFocus = FocusNode();
 
-  final firebaseAuth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -53,8 +53,6 @@ class _SignUpState extends State<SignUp> {
                 child: const Text(
                   "Sign Up",
                   style: TextStyle(
-                    // color: Colors.white,
-                    // fontFamily: "Avenir",
                     fontWeight: FontWeight.w400,
                     fontSize: 30,
                   ),
@@ -147,25 +145,12 @@ class _SignUpState extends State<SignUp> {
                 padding: const EdgeInsets.only(top: 20.0),
                 child: RoundedButton(
                   bWidth: MediaQuery.of(context).size.width / 1.5,
-                  bFunction: () async {
-                    //implement sign up
-                    Methods.showLoaderDialog(context);
-                    firebaseAuth
-                        .createUserWithEmailAndPassword(
-                            email: _emailCtrl.text,
-                            password: _passwordCtrl.text)
-                        .then((value) {
-                      if (value.user != null) {
-                        firebaseAuth
-                            .signInWithEmailAndPassword(
-                                email: _emailCtrl.text,
-                                password: _passwordCtrl.text)
-                            .then((value) {
-                          Navigator.pop(context);
-                          return Navigator.pushNamed(context, "dummy");
-                        });
-                      }
-                    });
+                  bFunction: () {
+                    AuthHelper().signUpEmailPassword(
+                      context,
+                      _emailCtrl.text,
+                      _passwordCtrl.text,
+                    );
                   },
                   bText: "Sign Up",
                   textColor: Colors.white,

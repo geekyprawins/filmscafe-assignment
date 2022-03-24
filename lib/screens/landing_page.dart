@@ -20,8 +20,6 @@ class _LandingPageState extends State<LandingPage> {
         height: height,
         width: width,
         child: Stack(
-          // crossAxisAlignment: CrossAxisAlignment.center,
-          // mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Positioned(
               top: -height * 0.12,
@@ -45,15 +43,6 @@ class _LandingPageState extends State<LandingPage> {
                 ),
               ),
             ),
-            // Center(
-            //   child: SizedBox(
-            //     height: height * 0.42,
-            //     width: width,
-            //     child: Image.asset(
-            //       'assets/images/floralTL.png',
-            //     ),
-            //   ),
-            // ),
             Center(
               child: SizedBox(
                 height: height * 0.42,
@@ -82,7 +71,7 @@ class _LandingPageState extends State<LandingPage> {
                   style: TextStyle(fontSize: 18),
                 ),
                 onPressed: () {
-                  Navigator.pushNamed(context, "dummy");
+                  Navigator.pushNamed(context, "signup");
                 },
               ),
             ),

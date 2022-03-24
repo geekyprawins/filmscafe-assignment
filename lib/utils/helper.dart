@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Methods {
+class Helper {
   static showLoaderDialog(BuildContext context) {
     AlertDialog alert = AlertDialog(
       backgroundColor: Colors.transparent,

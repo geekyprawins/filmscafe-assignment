@@ -1,12 +1,11 @@
-import 'package:filmscafe_task/logic/google_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:filmscafe_task/screens/auth/signup.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../../utils/methods.dart';
-import '../../widgets/custom_input.dart';
-import '../../widgets/rounded_button.dart';
 
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import 'package:filmscafe_task/logic/auth_helper.dart';
+import 'package:filmscafe_task/utils/helper.dart';
+import 'package:filmscafe_task/widgets/custom_input.dart';
+import 'package:filmscafe_task/widgets/rounded_button.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -20,8 +19,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordCtrl = TextEditingController();
   final FocusNode emailFocus = FocusNode();
   final FocusNode passwordFocus = FocusNode();
-
-  final firebaseAuth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -45,9 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: const Text(
                   "Welcome back, sign in!",
                   style: TextStyle(
-                    // color: Colors.white,
-                    // fontFamily: "Avenir",
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w400,
                     fontSize: 25,
                   ),
                 ),
@@ -100,19 +95,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           padding: const EdgeInsets.only(top: 20.0),
                           child: RoundedButton(
                             bWidth: MediaQuery.of(context).size.width / 1.5,
-                            bFunction: () async {
-                              // print("Clicked");
-                              Methods.showLoaderDialog(context);
-                              firebaseAuth
-                                  .signInWithEmailAndPassword(
-                                      email: _emailCtrl.text,
-                                      password: _passwordCtrl.text)
-                                  .then((valueUser) {
-                                if (valueUser.user != null) {
-                                  Navigator.pop(context);
-                                  return Navigator.pushNamed(context, "dummy");
-                                } else {}
-                              });
+                            bFunction: () {
+                              AuthHelper().signInEmailPassword(
+                                context,
+                                _emailCtrl.text,
+                                _passwordCtrl.text,
+                              );
                             },
                             bText: "Sign In",
                             textColor: Colors.white,
@@ -144,12 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                 ),
                                 onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const SignUp(),
-                                    ),
-                                  );
+                                  Navigator.pushNamed(context, "signup");
                                 },
                               )
                             ],
@@ -160,15 +143,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               ),
-              // const SizedBox(
-              //   height: 25,
-              // ),
               Padding(
                 padding: const EdgeInsets.all(25.0),
                 child: ElevatedButton.icon(
                   onPressed: () async {
-                    Methods.showLoaderDialog(context);
-                    final _googleUser = await GoogleAuthHelper().googleSignIn();
+                    Helper.showLoaderDialog(context);
+                    final _googleUser = await AuthHelper().googleSignIn();
                     if (_googleUser != null) {
                       Navigator.pop(context);
                       Navigator.pushNamed(context, "home-screen");
@@ -182,6 +162,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     "Sign in with Google",
                     style: TextStyle(
                       fontSize: 18,
+                      fontWeight: FontWeight.w400,
                     ),
                   ),
                   style: ElevatedButton.styleFrom(
