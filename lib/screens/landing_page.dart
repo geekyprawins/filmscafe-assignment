@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'auth/login.dart';
+import 'package:filmscafe_task/screens/auth/login.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({Key? key}) : super(key: key);

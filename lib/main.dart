@@ -1,6 +1,7 @@
 import 'package:filmscafe_task/screens/auth/login.dart';
 import 'package:filmscafe_task/screens/auth/signup.dart';
 import 'package:filmscafe_task/screens/dummy.dart';
+import 'package:filmscafe_task/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'screens/landing_page.dart';
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
       title: 'Filmscafe Task',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        fontFamily: "Inter",
       ),
       home: AnimatedSplashScreen(
         splash: Column(
@@ -58,8 +60,7 @@ class MyApp extends StatelessWidget {
         "login": (context) => const LoginScreen(),
         "signup": (context) => const SignUp(),
         "dummy": (context) => const Dummy(),
-
-        // "reset-password": (context) => const ResetPassword(),
+        "home-screen": (context) => const HomeScreen(),
       },
     );
   }

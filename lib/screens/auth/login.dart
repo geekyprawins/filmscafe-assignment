@@ -25,8 +25,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Within the `FirstRoute` widget
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -45,12 +43,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   top: MediaQuery.of(context).size.height * 0.05,
                 ),
                 child: const Text(
-                  "Log-In",
+                  "Welcome back, sign in!",
                   style: TextStyle(
                     // color: Colors.white,
                     // fontFamily: "Avenir",
-                    fontWeight: FontWeight.w400,
-                    fontSize: 30,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 25,
                   ),
                 ),
               ),
@@ -99,26 +97,62 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(25.0),
-                          child: ElevatedButton.icon(
-                            onPressed: () async {
+                          padding: const EdgeInsets.only(top: 20.0),
+                          child: RoundedButton(
+                            bWidth: MediaQuery.of(context).size.width / 1.5,
+                            bFunction: () async {
+                              // print("Clicked");
                               Methods.showLoaderDialog(context);
-                              final _googleUser =
-                                  await GoogleAuthHelper().googleSignIn();
-                              if (_googleUser != null) {
-                                Navigator.pop(context);
-                                Navigator.pushNamed(context, "dummy");
-                              } else {}
+                              firebaseAuth
+                                  .signInWithEmailAndPassword(
+                                      email: _emailCtrl.text,
+                                      password: _passwordCtrl.text)
+                                  .then((valueUser) {
+                                if (valueUser.user != null) {
+                                  Navigator.pop(context);
+                                  return Navigator.pushNamed(context, "dummy");
+                                } else {}
+                              });
                             },
-                            icon: const FaIcon(
-                              FontAwesomeIcons.google,
-                            ),
-                            label: const Text(
-                              "Sign in with Google",
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.orange,
-                            ),
+                            bText: "Sign In",
+                            textColor: Colors.white,
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            top: 20.0,
+                            left: MediaQuery.of(context).size.width / 5.5,
+                          ),
+                          child: Row(
+                            children: [
+                              const Text(
+                                "Don't have an account ? ",
+                                style: TextStyle(
+                                  // color: Colors.white,
+                                  decoration: TextDecoration.none,
+                                  fontSize: 15,
+                                ),
+                              ),
+                              GestureDetector(
+                                child: const Text(
+                                  "Sign-up",
+                                  style: TextStyle(
+                                    color: Colors.deepPurple,
+                                    decoration: TextDecoration.none,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const SignUp(),
+                                    ),
+                                  );
+                                },
+                              )
+                            ],
                           ),
                         ),
                       ],
@@ -130,62 +164,37 @@ class _LoginScreenState extends State<LoginScreen> {
               //   height: 25,
               // ),
               Padding(
-                padding: const EdgeInsets.only(top: 20.0),
-                child: RoundedButton(
-                  bWidth: MediaQuery.of(context).size.width / 1.5,
-                  bFunction: () async {
-                    // print("Clicked");
+                padding: const EdgeInsets.all(25.0),
+                child: ElevatedButton.icon(
+                  onPressed: () async {
                     Methods.showLoaderDialog(context);
-                    firebaseAuth
-                        .signInWithEmailAndPassword(
-                            email: _emailCtrl.text,
-                            password: _passwordCtrl.text)
-                        .then((valueUser) {
-                      if (valueUser.user != null) {
-                        Navigator.pop(context);
-                        return Navigator.pushNamed(context, "dummy");
-                      } else {}
-                    });
+                    final _googleUser = await GoogleAuthHelper().googleSignIn();
+                    if (_googleUser != null) {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, "home-screen");
+                    } else {}
                   },
-                  bText: "Sign In",
-                  textColor: Colors.white,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                  top: 20.0,
-                  left: MediaQuery.of(context).size.width / 5.5,
-                ),
-                child: Row(
-                  children: [
-                    const Text(
-                      "Don't have an account ? ",
-                      style: TextStyle(
-                        // color: Colors.white,
-                        decoration: TextDecoration.none,
-                        fontSize: 15,
+                  icon: const FaIcon(
+                    FontAwesomeIcons.google,
+                    color: Colors.red,
+                  ),
+                  label: const Text(
+                    "Sign in with Google",
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    elevation: 2,
+                    minimumSize:
+                        Size(MediaQuery.of(context).size.width / 1.5, 50),
+                    primary: Colors.black87,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(60),
                       ),
                     ),
-                    GestureDetector(
-                      child: const Text(
-                        "Sign-up",
-                        style: TextStyle(
-                          color: Colors.deepPurple,
-                          decoration: TextDecoration.none,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => SignUp(),
-                          ),
-                        );
-                      },
-                    )
-                  ],
+                  ),
                 ),
               ),
             ],
